@@ -1,0 +1,41 @@
+---
+title: "Consultant Project"
+author: "Tara Dehdari"
+date: "2023-05-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(ggplot2)
+data <- read_csv("C:/Users/tarad/USD GRAD SCHOOL-C/ADS501 Foundations of Data Science/consultancy project/codes/Employee_monthly_salary.csv")
+
+```
+
+## PreProcessing Data
+
+### Missing values
+
+```{r }
+missing_counts <- colSums(is.na(data))
+print(missing_counts)
+```
+### Looking for Outliers
+
+```{r}
+ggplot(data, aes(x = "", y = GROSS)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Gross Income",
+       x = "Gross",
+       y = "Dollars")
+
+ggplot(data, aes(x = "", y = Net_Pay)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Net Income",
+       x = "Net",
+       y = "Dollars")
+
+
+```
+
