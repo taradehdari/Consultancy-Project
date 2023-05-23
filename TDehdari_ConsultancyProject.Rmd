@@ -39,3 +39,16 @@ ggplot(data, aes(x = "", y = Net_Pay)) +
 
 ```
 
+### Grouping between departments and than job titles in each department?
+### Data Description
+```{r}
+str(Employee_monthly_salary)
+
+num_records <- nrow(Employee_monthly_salary)
+num_fields <- ncol(Employee_monthly_salary)
+
+
+cat("Number of records:", num_records, "\n")
+cat("Number of fields:", num_fields, "\n")
+```
+
