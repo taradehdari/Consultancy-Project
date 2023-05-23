@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(ggplot2)
+library(dplyr)
 data <- read_csv("C:/Users/tarad/USD GRAD SCHOOL-C/ADS501 Foundations of Data Science/consultancy project/codes/Employee_monthly_salary.csv")
 
 ```
@@ -47,8 +48,34 @@ str(Employee_monthly_salary)
 num_records <- nrow(Employee_monthly_salary)
 num_fields <- ncol(Employee_monthly_salary)
 
-
 cat("Number of records:", num_records, "\n")
 cat("Number of fields:", num_fields, "\n")
+
+#number of females
+num_females <- sum(Employee_monthly_salary$Gender == "F")
+#number of males
+num_males <- sum(Employee_monthly_salary$Gender == "M")
+#average salary of females
+avg_F_salary <- Employee_monthly_salary %>%
+  filter(Gender == "F") %>%
+  summarize(avg_F_salary = mean(GROSS)) 
+#average salary of males
+avg_M_salary <- Employee_monthly_salary %>%
+  filter(Gender == "M") %>%
+  summarize(avg_M_salary = mean(GROSS)) 
+
+cat("The number of Females are: ", num_females," and the average gross pay for females is:" , avg_F_salary$avg_F_salary, "\n")
+
+cat("The number of Males are: ", num_males," and the average gross pay for males is:" , avg_M_salary$avg_M_salary, "\n")
+
+#age range
+age_range <- range(Employee_monthly_salary$Age)
+
+cat("Age range:", age_range[1], "-", age_range[2], "\n")
+
+#number of each person in each age
+age_counts <- table(Employee_monthly_salary$Age)
+
+print(age_counts)
 ```
 
