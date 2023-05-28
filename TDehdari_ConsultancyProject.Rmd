@@ -40,7 +40,7 @@ ggplot(data, aes(x = "", y = Net_Pay)) +
 
 ```
 
-### Grouping between departments and than job titles in each department?
+
 ### Data Description
 ```{r}
 str(Employee_monthly_salary)
@@ -77,5 +77,126 @@ cat("Age range:", age_range[1], "-", age_range[2], "\n")
 age_counts <- table(Employee_monthly_salary$Age)
 
 print(age_counts)
+```
+## Data Exploration 
+### Grouping between departments and than job titles in each department to see if women are in leadership postions?
+### Barchart of women and men salary between job types
+```{r}
+#how many jobs
+unique_jobs <- unique(Employee_monthly_salary$Designation)
+print(unique_jobs)
+
+#filter by top job titles 
+top_job_titles <- Employee_monthly_salary %>% 
+  count(Designation) %>%
+  top_n(20)
+
+#box plot with filtered job titles
+ggplot(filter(Employee_monthly_salary, Designation %in% top_job_titles$Designation),
+       aes(x = Designation, y = GROSS, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Job Title", y = "Gross Salary", fill = "Gender") +
+  ggtitle("Gender-based Salary Distribution by Top Job Titles") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#filter by top job titles 
+top_departments <- Employee_monthly_salary %>% 
+  count(Department) %>%
+  top_n(20)
+
+#box plot with filtered job titles
+ggplot(filter(Employee_monthly_salary, Department %in% top_departments$Department),
+       aes(x = Department, y = GROSS, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Departments", y = "Gross Salary", fill = "Gender") +
+  ggtitle("Gender-based Salary Distribution by Top Departments") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+Barchart of every Designation in the Department LUNA/OPEN Engineering
+
+```{r}
+# Filter dataset by Department
+luna_open_data <- Employee_monthly_salary %>%
+  filter(Department == "LUNA/OPEN Engineering")
+
+# Create the grouped bar chart
+ggplot(luna_open_data, aes(x = Designation, y = GROSS, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Job Title", y = "Gross Salary", fill = "Gender") +
+  ggtitle("Salary Distribution by Job Titles (LUNA/OPEN Engineering)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+# Filter dataset by Department and Job Title
+directory_engineers <- Employee_monthly_salary %>%
+  filter(Department == "LUNA/OPEN Engineering" & Designation == "Director..Engineering")
+
+# Count the number of Director..Engineering
+count_directory_engineers <- nrow(directory_engineers)
+
+# Print the count
+print(count_directory_engineers)
+
+# Get the gender of the Director..Engineering
+gender <- directory_engineers$Gender
+
+# Print the gender
+print(gender)
+```
+Barchart of every Designation in the Department AmaTec-Americas TSE
+
+```{r}
+# Filter dataset by Department
+AMA <- Employee_monthly_salary %>%
+  filter(Department == "AmaTec - Americas TSE")
+
+# Create the grouped bar chart
+ggplot(AMA, aes(x = Designation, y = GROSS, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Job Title", y = "Gross Salary", fill = "Gender") +
+  ggtitle("Salary Distribution by Job Titles (AmaTec - Americas TSE)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+In each department the Directors were graphed to see wether they are male or female
+
+```{r}
+# Filter dataset for job titles containing "Director" and count by department and gender
+director_counts <- Employee_monthly_salary %>%
+  filter(grepl("Director", Designation, ignore.case = TRUE)) %>%
+  group_by(Department, Gender) %>%
+  summarise(count = n())
+
+# Create the bar chart
+ggplot(director_counts, aes(x = Department, y = count, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Department", y = "Count", fill = "Gender") +
+  ggtitle("Gender Distribution of Directors in Each Department") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+Look at the wizards program since female director 
+```{r}
+# Filter dataset by Department
+wizard_program <- Employee_monthly_salary %>%
+  filter(Department == "Wizards Program")
+
+# Create the grouped bar chart
+ggplot(wizard_program, aes(x = Designation, y = GROSS, fill = Gender)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Job Title", y = "Gross Salary", fill = "Gender") +
+  ggtitle("Salary Distribution by Job Titles (Wizards Program)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
 ```
 
