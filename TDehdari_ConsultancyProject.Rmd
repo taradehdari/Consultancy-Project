@@ -114,6 +114,12 @@ ggplot(filter(Employee_monthly_salary, Department %in% top_departments$Departmen
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
+# boxplot
+ggplot(Employee_monthly_salary, aes(x = Gender, y = GROSS, color = Gender)) +
+  geom_boxplot() +
+  labs(x = "Gender", y = "Salary", color = "Gender") +
+  ggtitle("Male vs Female Salary Distribution") 
+
 ```
 
 Barchart of every Designation in the Department LUNA/OPEN Engineering
