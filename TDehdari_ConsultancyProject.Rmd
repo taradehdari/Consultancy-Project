@@ -120,7 +120,17 @@ ggplot(Employee_monthly_salary, aes(x = Gender, y = GROSS, color = Gender)) +
   labs(x = "Gender", y = "Salary", color = "Gender") +
   ggtitle("Male vs Female Salary Distribution") 
 
+
 ```
+```{r}
+#histogram of male and female salaries
+ggplot(Employee_monthly_salary, aes(x = GROSS, fill = Gender)) +
+  geom_histogram(position = "identity", bins = 30, alpha = 0.5, color = "black") +
+                 scale_fill_manual(values = c("red", "light blue")) +
+  labs(x = "Salary", y = "Frequency", fill = "Gender") +
+  ggtitle("Distribution of Salaries by Gender") 
+```
+
 
 Barchart of every Designation in the Department LUNA/OPEN Engineering
 
