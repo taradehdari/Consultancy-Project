@@ -91,7 +91,7 @@ top_job_titles <- Employee_monthly_salary %>%
   count(Designation) %>%
   top_n(20)
 
-#box plot with filtered job titles
+#barchart with filtered job titles
 ggplot(filter(Employee_monthly_salary, Designation %in% top_job_titles$Designation),
        aes(x = Designation, y = GROSS, fill = Gender)) +
   geom_bar(stat = "identity", position = "dodge") +
@@ -100,12 +100,12 @@ ggplot(filter(Employee_monthly_salary, Designation %in% top_job_titles$Designati
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-#filter by top job titles 
+#filter by top department 
 top_departments <- Employee_monthly_salary %>% 
   count(Department) %>%
   top_n(20)
 
-#box plot with filtered job titles
+#bar chart with filtered job titles
 ggplot(filter(Employee_monthly_salary, Department %in% top_departments$Department),
        aes(x = Department, y = GROSS, fill = Gender)) +
   geom_bar(stat = "identity", position = "dodge") +
@@ -145,7 +145,7 @@ ggplot(luna_open_data, aes(x = Designation, y = GROSS, fill = Gender)) +
   labs(x = "Job Title", y = "Gross Salary", fill = "Gender") +
   ggtitle("Salary Distribution by Job Titles (LUNA/OPEN Engineering)") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 
 # Filter dataset by Department and Job Title
