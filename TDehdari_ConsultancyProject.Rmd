@@ -1,8 +1,10 @@
 ---
-title: "Consultant Project"
+title: "Consultancy Project"
 author: "Tara Dehdari"
 date: "2023-05-16"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -10,28 +12,29 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(ggplot2)
 library(dplyr)
-data <- read_csv("C:/Users/tarad/USD GRAD SCHOOL-C/ADS501 Foundations of Data Science/consultancy project/codes/Employee_monthly_salary.csv")
+Employee_monthly_salary <- read_csv("C:/Users/tarad/USD GRAD SCHOOL-C/ADS501 Foundations of Data Science/consultancy project/codes/Employee_monthly_salary.csv")
 
 ```
 
-## PreProcessing Data
+## Pre-processing Data
 
 ### Missing values
 
 ```{r }
-missing_counts <- colSums(is.na(data))
+missing_counts <- colSums(is.na(Employee_monthly_salary))
 print(missing_counts)
 ```
+
 ### Looking for Outliers
 
 ```{r}
-ggplot(data, aes(x = "", y = GROSS)) +
+ggplot(Employee_monthly_salary, aes(x = "", y = GROSS)) +
   geom_boxplot() +
   labs(title = "Boxplot of Gross Income",
        x = "Gross",
        y = "Dollars")
 
-ggplot(data, aes(x = "", y = Net_Pay)) +
+ggplot(Employee_monthly_salary, aes(x = "", y = Net_Pay)) +
   geom_boxplot() +
   labs(title = "Boxplot of Net Income",
        x = "Net",
@@ -40,8 +43,8 @@ ggplot(data, aes(x = "", y = Net_Pay)) +
 
 ```
 
-
 ### Data Description
+
 ```{r}
 str(Employee_monthly_salary)
 
@@ -78,9 +81,9 @@ age_counts <- table(Employee_monthly_salary$Age)
 
 print(age_counts)
 ```
-## Data Exploration 
-### Grouping between departments and than job titles in each department to see if women are in leadership postions?
-### Barchart of women and men salary between job types
+
+## Data Exploration
+
 ```{r}
 #how many jobs
 unique_jobs <- unique(Employee_monthly_salary$Designation)
@@ -122,6 +125,9 @@ ggplot(Employee_monthly_salary, aes(x = Gender, y = GROSS, color = Gender)) +
 
 
 ```
+
+### Histogram of Male and Female Salaries 
+
 ```{r}
 #histogram of male and female salaries
 ggplot(Employee_monthly_salary, aes(x = GROSS, fill = Gender)) +
@@ -132,7 +138,7 @@ ggplot(Employee_monthly_salary, aes(x = GROSS, fill = Gender)) +
 ```
 
 
-Barchart of every Designation in the Department LUNA/OPEN Engineering
+### Barchart of every Designation in the Department LUNA/OPEN Engineering
 
 ```{r}
 # Filter dataset by Department
@@ -164,7 +170,8 @@ gender <- directory_engineers$Gender
 # Print the gender
 print(gender)
 ```
-Barchart of every Designation in the Department AmaTec-Americas TSE
+
+### Barchart of every Designation in the Department AmaTec-Americas TSE
 
 ```{r}
 # Filter dataset by Department
@@ -180,8 +187,7 @@ ggplot(AMA, aes(x = Designation, y = GROSS, fill = Gender)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-
-In each department the Directors were graphed to see wether they are male or female
+### In each department the Directors were graphed to see whether they are male or female
 
 ```{r}
 # Filter dataset for job titles containing "Director" and count by department and gender
@@ -200,7 +206,9 @@ ggplot(director_counts, aes(x = Department, y = count, fill = Gender)) +
 
 
 ```
-Look at the wizards program since female director 
+
+### Look at the wizards program since it contains a female director
+
 ```{r}
 # Filter dataset by Department
 wizard_program <- Employee_monthly_salary %>%
@@ -215,4 +223,3 @@ ggplot(wizard_program, aes(x = Designation, y = GROSS, fill = Gender)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
-
